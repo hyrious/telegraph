@@ -1,0 +1,14 @@
+{
+  "name": "@hyrious/telegraph",
+  "version": "0.1.0",
+  "description": "standalone node app to write blog post",
+  "type": "module",
+  "repository": "hyrious/telegraph",
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hyrious/telegraph/issues"
+  },
+  "homepage": "https://github.com/hyrious/telegraph#readme"
+}
