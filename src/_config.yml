@@ -1,0 +1,7 @@
+# change the directory where tg will read files
+# cli: -s, --source="src"
+source: src
+
+# change the directory where tg will write files
+# cli: -d, --destination="dist"
+destination: dist
