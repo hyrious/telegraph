@@ -5,3 +5,7 @@ source: src
 # change the directory where tg will write files
 # cli: -d, --destination="dist"
 destination: dist
+
+# change the default fallback page
+# if the file does not exist, tg will not generate a 404 page
+404: 404.html

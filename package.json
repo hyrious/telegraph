@@ -3,12 +3,24 @@
   "version": "0.1.0",
   "description": "standalone node app to write blog post",
   "type": "module",
-  "repository": "hyrious/telegraph",
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/hyrious/telegraph/issues"
+  "exports": {
+    "default": "./dist/telegraph.js"
   },
-  "homepage": "https://github.com/hyrious/telegraph#readme"
+  "bin": "./dist/telegraph.js",
+  "repository": "hyrious/telegraph",
+  "keywords": [
+    "blog",
+    "cli",
+    "node"
+  ],
+  "author": "hyrious <hyrious@outlook.com>",
+  "license": "MIT",
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "liquidjs": "^9.28.5",
+    "read-yaml-file": "^2.1.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.13.15"
+  }
 }
