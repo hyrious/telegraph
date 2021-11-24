@@ -66,9 +66,9 @@ you can write the yaml in a code block, or in a comment block, as long as
 they are the first element of this file.
 
 If the file does not have a front matter, tg will try to guess the title from
-the first heading (`h1` ~ `h6`) element of the file content. The date will be
-the file's last modification time (but it is incorrect at the most of the time,
-so you'd better put one).
+the first heading (`h1` ~ `h6`) element of the file content and the file name.
+The date will be the file's last modification time (but it is incorrect at
+the most of the time, so you'd better put one).
 
 ### Liquid Template
 
