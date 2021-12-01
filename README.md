@@ -19,7 +19,7 @@ If you don't like working in the browser, you can use the CLI:
 
 ```bash
 $ tg new "post-title"
-created src/post-title.md
+created post-title.md
 ```
 
 Other commands:
@@ -27,8 +27,8 @@ Other commands:
 ```bash
 # build the site
 $ tg build
-  dist/index.html        123 b
-  dist/post-title.html  4.56 kb
+  .tg/dist/index.html        123 b
+  .tg/dist/post-title.html  4.56 kb
 Done in 789ms.
 
 # start a simple http server at dist folder
@@ -38,15 +38,15 @@ serving http://localhost:5000
 
 ### Config
 
-Create a `_config.yml` to some folder, or let the cli help you.
+Create a `.tg/config.ts`, or let the cli help you. You can use JSON or YAML too.
 
 ```bash
 $ tg init
-created _config.yml.
-created src/hello-world.md
+created .tg/config.ts.
+created index.md
 ```
 
-See [<samp>\_config.yml</samp>](src/_config.yml) for more details.
+See [<samp>config.ts</samp>](src/config.ts) for more details.
 
 ### Front Matter
 
@@ -61,14 +61,17 @@ date: 2021-12-25 # will generate a <time> tag after the first heading element
 Hi there! This is a post.
 ```
 
-In case it is possible that there's no correct syntax highlighter for the file,
-you can write the yaml in a code block, or in a comment block, as long as
-they are the first element of this file.
+It will be processed with [gray-matter](https://github.com/jonschlinkert/gray-matter).
 
-If the file does not have a front matter, tg will try to guess the title from
-the first heading (`h1` ~ `h6`) element of the file content and the file name.
-The date will be the file's last modification time (but it is incorrect at
-the most of the time, so you'd better put one).
+You can access these variables in your content with the special variable `page`:
+
+```yaml
+---
+title: Hello, world!
+---
+
+# {{ page.title }}
+```
 
 ### Liquid Template
 
@@ -91,25 +94,15 @@ A blog usually looks something like this:
 
 ```
 .
-|- _config.yml
-|- _layouts
-  |- default.html
-  |- post.html
 |- index.html
 |- post-title.md
+|- .tg/
+    |- config.ts
+    |- dist/        # output folder
 ```
 
-All files will be rendered to html/css/js and saved to `{dist}` folder, except
-the ones with `.`, `_`, `#`, `~` prefix. And there are some special files:
-
-```
-_config.yml # config file
-_layouts/   # layout files, will choose `default.html` for all posts
-            # without defining their layout in front matter
-```
-
-If there's no `_layouts/default.html`, it will fallback to a built-in one
-which looks like [Telegraph](https://telegra.ph).
+All files will be rendered to html/css/js and saved to `.tg/dist` folder, except
+the ones with `.`, `_`, `#`, `~` prefix.
 
 ### Live Editing
 
