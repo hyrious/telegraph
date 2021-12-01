@@ -111,6 +111,13 @@ _layouts/   # layout files, will choose `default.html` for all posts
 If there's no `_layouts/default.html`, it will fallback to a built-in one
 which looks like [Telegraph](https://telegra.ph).
 
+### Live Editing
+
+The built-in server started by `tg` is a simplified centralized live editor.
+**Live** means that 2 or more people can edit the same file at the same time.
+
+For more details on how it works, see [Live Editing](./docs/live-editing.md).
+
 ## License
 
 MIT @ [hyrious](https://github.com/hyrious)
