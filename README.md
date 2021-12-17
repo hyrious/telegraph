@@ -25,6 +25,14 @@ created post-title.md
 Other commands:
 
 ```bash
+# refresh post date in front matter, so that you don't have to do it manually
+$ tg touch ./post-title.md
+updated as 2021-01-01
+originally 2020-01-01
+# if touch a non-existing file, it will work the same as "new"
+$ tg touch ./not-exist.md
+created not-exist.md
+
 # build the site
 $ tg build
   .tg/dist/index.html        123 b
@@ -38,11 +46,11 @@ serving http://localhost:5000
 
 ### Config
 
-Create a `.tg/config.ts`, or let the cli help you. You can use JSON or YAML too.
+Create a `.tg/config.yml`, or let the cli help you.
 
 ```bash
 $ tg init
-created .tg/config.ts.
+created .tg/config.yml.
 created index.md
 ```
 
@@ -93,21 +101,57 @@ The full site's rendering order is:
 A blog usually looks something like this:
 
 ```
-.
 |- index.html
 |- post-title.md
 |- .tg/
-    |- config.ts
+    |- config.yml
     |- dist/        # output folder
 ```
 
-All files will be rendered to html/css/js and saved to `.tg/dist` folder, except
-the ones with `.`, `_`, `#`, `~` prefix.
+All files will be rendered to html/css/js and be saved to `.tg/dist` folder,
+except the ones with `.`, `_`, `#`, `~` prefix. This convention is helpful to
+achieve something like jekyll:
+
+```
+|- style.scss       # will be compiled to {dist}/style.css
+    ^ @use "variables";
+|- _variables.scss  # will not be compiled
+
+|- some-page.md     # will be compiled to {dist}/some-page.html
+    ^ layout: post
+|- .tg/layouts/     # will not be compiled, but will be searched
+    |- post.html
+|- _layouts/        # same as above
+    |- post.html
+```
+
+The layout searching folder is defined in `layouts_dir` field.
+The same as styles, scripts and other stuff.
+
+```yml
+layouts_dir:
+  - ./layouts
+  - ../_layouts
+
+sass_dir:
+  - ./sass
+  - ../_sass
+
+includes_dir:
+  - ./includes
+  - ../_includes
+
+data_dir:
+  - ./data
+  - ../_data
+```
 
 ### Live Editing
 
 The built-in server started by `tg` is a simplified centralized live editor.
 **Live** means that 2 or more people can edit the same file at the same time.
+So you can just type `tg --host` on your server and let others publish posts
+on it.
 
 For more details on how it works, see [Live Editing](./docs/live-editing.md).
 
