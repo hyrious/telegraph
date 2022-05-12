@@ -1,0 +1,13 @@
+{
+  "tabWidth": 2,
+  "singleQuote": true,
+  "endOfLine": "auto",
+  "overrides": [
+    {
+      "files": ["*.yml"],
+      "options": {
+        "singleQuote": false
+      }
+    }
+  ]
+}

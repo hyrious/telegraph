@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>中文标题</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <h1>中文标题</h1>
+  <address>最后更新于 <time>2022-05-25</time></address>
+  <p>输出文件名将会是 chinese.html <span class="half-shrink-left">（</span>文件名<span class="half-shrink-right">）</span>，而内容标题是这里设置的 title。</p>
+<p>当检测到文本内含有 >50% 的中文时，会自动使用另一个模版文件 post.zh.html。目前这个语言是写死的<span class="half-shrink-left">（</span>因为只有我自己用<span class="half-shrink-right">）</span>。</p>
+<p>一些针对中文的优化：</p>
+<ul>
+<li>中文之间换行不会自动插入空格，会直接拼接在一起；</li>
+<li>一些标点符号会自动减掉半格，例如 <code>）。</code>，会自动把 <code>）</code> 右边剪掉；</li>
+</ul>
+</body>
+</html>

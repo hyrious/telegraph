@@ -1,0 +1,11 @@
+{
+  "include": ["."],
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "es2019",
+    "outDir": "../../dist/node",
+    "module": "commonjs",
+    "lib": ["esnext"],
+    "types": ["node"]
+  }
+}

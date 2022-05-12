@@ -1,0 +1,10 @@
+{
+  "include": ["."],
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../dist/client",
+    "module": "esnext",
+    "types": [],
+    "lib": ["esnext", "dom", "dom.iterable"]
+  }
+}
