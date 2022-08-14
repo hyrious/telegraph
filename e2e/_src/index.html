@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Blog</title>
+  <meta name="color-scheme" content="light dark">
+  <meta name="viewport" content="width=device-width">
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Blog</h2>
+  <h3>Posts</h3>
+  {#each posts.slice(0, 20) as post}
+    <p><a href="p/{ post.id }.html">{ post.title }</a></p>
+  {/each}
+  {#if posts.length > 20}
+    <p><a href="p/index.html">...</a></p>
+  {/if}
+</body>
+</html>

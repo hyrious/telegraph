@@ -1,0 +1,6 @@
+node_modules
+dist
+
+e2e/p
+e2e/index.html
+e2e/style.css
