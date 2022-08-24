@@ -10,6 +10,7 @@
 </head>
 <body>
   <h2>Blog</h2>
+  <p>Last updated at { site.date }</p>
   <h3>Posts</h3>
   {#each posts.slice(0, 20) as post}
     <p><a href="p/{ post.id }.html">{ post.title }</a></p>

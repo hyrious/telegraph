@@ -42,6 +42,10 @@ function main(cwd_: string | undefined, options: CLIOptions) {
     posts_index(ps: Post[]): string;
   }
 
+  function format_date<P extends { date: Date }>(p: P): Omit<P, "date"> & { date: string } {
+    return { ...p, date: p.date.toISOString().slice(0, 10) };
+  }
+
   const DefaultTemplate: Template = {
     post: (p) =>
       `<!DOCTYPE html><meta charset=utf8><title>${p.title}</title><body><h1>${p.title}</h1>${p.html}`,
@@ -58,11 +62,16 @@ function main(cwd_: string | undefined, options: CLIOptions) {
         .join("")}</ul>`,
   };
 
+  let site: { date: Date } = { date: new Date() };
   let posts: { [id: string]: Post | null } = {};
   let template = { ...DefaultTemplate };
 
   function get_posts() {
     return (Object.values(posts).filter(Boolean) as Post[]).sort((a, b) => +b.date - +a.date);
+  }
+
+  function get_last_modified_date(): Date | undefined {
+    return get_posts()[0]?.date;
   }
 
   // streams
@@ -91,8 +100,8 @@ function main(cwd_: string | undefined, options: CLIOptions) {
       const input = join(src, "post.html");
       if (existsSync(input)) {
         const html = readFileSync(input, "utf-8");
-        const render = compile(html, "{ post }");
-        template.post = (post) => render({ post });
+        const render = compile(html, "{ site, post }");
+        template.post = (post) => render({ site: format_date(site), post: format_date(post) });
       } else {
         template.post = DefaultTemplate.post;
       }
@@ -115,6 +124,7 @@ function main(cwd_: string | undefined, options: CLIOptions) {
         posts[id] = null;
         rmSync(output, { maxRetries: 3 });
       }
+      site.date = get_last_modified_date() || new Date();
       dirty.posts[id] = false;
     });
 
@@ -122,8 +132,8 @@ function main(cwd_: string | undefined, options: CLIOptions) {
       const input = join(src, "index.html");
       if (existsSync(input)) {
         const html = readFileSync(input, "utf-8");
-        const render = compile(html, "{ posts }");
-        template.index = (posts) => render({ posts });
+        const render = compile(html, "{ site, posts }");
+        template.index = (posts) => render({ site: format_date(site), posts: posts.map(format_date) });
       } else {
         template.index = DefaultTemplate.index;
       }
@@ -135,8 +145,8 @@ function main(cwd_: string | undefined, options: CLIOptions) {
       const input = join(src, "posts-index.html");
       if (existsSync(input)) {
         const html = readFileSync(input, "utf-8");
-        const render = compile(html, "{ posts }");
-        template.posts_index = (posts) => render({ posts });
+        const render = compile(html, "{ site, posts }");
+        template.posts_index = (posts) => render({ site: format_date(site), posts: posts.map(format_date) });
       } else {
         template.posts_index = DefaultTemplate.posts_index;
       }
