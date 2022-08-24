@@ -139,6 +139,8 @@ function main(cwd_: string | undefined, options: CLIOptions) {
       }
       site.date = get_last_modified_date() || new Date();
       dirty.posts[id] = false;
+      dirty.template_index = true;
+      dirty.template_posts_index = true;
     });
 
     if (dirty.template_index) {
