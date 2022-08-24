@@ -55,7 +55,7 @@ function parse(template: string) {
   let last2: { raw?: string; expr?: string }[] = [{}, {}];
   for (const part of parts) {
     if (part.raw && indent) {
-      part.raw = part.raw.trim().replace(new RegExp(`^ {${indent * indent_size}}`, "gm"), "");
+      part.raw = part.raw.trimStart().replace(new RegExp(`^ {${indent * indent_size}}`, "gm"), "");
     }
     if (part.expr && part.expr[0] === "#") {
       indent++;
