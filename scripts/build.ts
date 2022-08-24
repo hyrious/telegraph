@@ -1,8 +1,7 @@
 import { build, Plugin } from "esbuild";
-import { builtinModules } from "module";
 import { dependencies } from "../package.json";
 
-const deps = Object.keys(dependencies).concat(builtinModules);
+const deps = Object.keys(dependencies);
 
 const rewriteImport: Plugin = {
   name: "rewrite-import",
@@ -18,6 +17,7 @@ const rewriteImport: Plugin = {
 Promise.all([
   build({
     entryPoints: ["./src/index.ts"],
+    platform: "node",
     bundle: true,
     format: "esm",
     outdir: "dist",
@@ -26,6 +26,7 @@ Promise.all([
   }),
   build({
     entryPoints: ["./src/bin.ts"],
+    platform: "node",
     bundle: true,
     format: "esm",
     outdir: "dist",

@@ -8,6 +8,10 @@
     "tg": "./dist/bin.js"
   },
   "types": "./src/index.ts",
+  "files": [
+    "src",
+    "dist"
+  ],
   "scripts": {
     "build": "esbuild-dev scripts/build.ts",
     "test:e2e": "npm run build && node dist/bin.js e2e -w"
