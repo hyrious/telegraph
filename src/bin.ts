@@ -95,7 +95,7 @@ function main(cwd_: string | undefined, options: CLIOptions) {
   }
 
   // actions
-  async function refresh() {
+  async function refresh_() {
     debug("refresh %o", dirty);
 
     if (dirty.style) {
@@ -176,6 +176,9 @@ function main(cwd_: string | undefined, options: CLIOptions) {
     if (!existsSync(join(cwd, "p/index.html"))) {
       writeFileSync(join(cwd, "p/index.html"), template.posts_index(get_posts()));
     }
+  }
+  function refresh() {
+    refresh_().catch((err) => console.error(err.message));
   }
   const notify = debounce(refresh);
 
