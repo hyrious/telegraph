@@ -1,4 +1,4 @@
-import { batch } from "@hyrious/utils";
+import { noop } from "@hyrious/utils";
 import { watch } from "chokidar";
 import { build } from "esbuild";
 import { existsSync, mkdirSync, readFileSync, writeFileSync, rmSync, readdirSync } from "fs";
@@ -6,6 +6,7 @@ import { createServer } from "http";
 import { join, resolve } from "path";
 import sade from "sade";
 import sirv from "sirv";
+import Debug from "debug";
 
 import { version } from "../package.json";
 import { parseMarkdown } from "./index";
@@ -31,6 +32,8 @@ interface CLIOptions {
 }
 
 function main(cwd_: string | undefined, options: CLIOptions) {
+  const debug = Debug("tg");
+
   const cwd = resolve(cwd_ || ".");
 
   // variables
@@ -83,8 +86,18 @@ function main(cwd_: string | undefined, options: CLIOptions) {
     template_post: false,
   };
 
+  function debounce(fn: () => void) {
+    let timer = setTimeout(noop);
+    return function wrapper() {
+      clearTimeout(timer);
+      timer = setTimeout(fn, 100);
+    };
+  }
+
   // actions
-  const notify = batch(async function refresh() {
+  async function refresh() {
+    debug("refresh %o", dirty);
+
     if (dirty.style) {
       const input = join(src, "style.css");
       const output = join(cwd, "style.css");
@@ -163,9 +176,24 @@ function main(cwd_: string | undefined, options: CLIOptions) {
     if (!existsSync(join(cwd, "p/index.html"))) {
       writeFileSync(join(cwd, "p/index.html"), template.posts_index(get_posts()));
     }
-  });
+  }
+  const notify = debounce(refresh);
 
-  // kick start
+  // first render
+  Object.keys(dirty).forEach((k) => {
+    if (typeof (dirty as any)[k] === "boolean") {
+      (dirty as any)[k] = true;
+    }
+  });
+  readdirSync(src).forEach((file) => {
+    if (file.endsWith(".md")) {
+      const id = file.slice(0, -3);
+      dirty.posts[id] = true;
+    }
+  });
+  refresh();
+
+  // watch if needed
   if (options.watch) {
     const watcher = watch(src, {
       ignored: ["**/.git/**", "**/node_modules/**"],
@@ -211,18 +239,5 @@ function main(cwd_: string | undefined, options: CLIOptions) {
         process.exit();
       }
     });
-  } else {
-    Object.keys(dirty).forEach((k) => {
-      if (typeof (dirty as any)[k] === "boolean") {
-        (dirty as any)[k] = true;
-      }
-    });
-    readdirSync(src).forEach((file) => {
-      if (file.endsWith(".md")) {
-        const id = file.slice(0, -3);
-        dirty.posts[id] = true;
-      }
-    });
-    notify();
   }
 }
