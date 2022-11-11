@@ -2,7 +2,7 @@ name: Node.js Package
 
 on:
   push:
-    tags: "*"
+    tags: '*'
   workflow_dispatch:
 
 jobs:
@@ -13,9 +13,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          registry-url: "https://registry.npmjs.org"
+          registry-url: 'https://registry.npmjs.org'
       - run: npm install
-      - run: npm run build
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

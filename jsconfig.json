@@ -1,0 +1,10 @@
+{
+  "include": ["lib", "bin.js", "index.js"],
+  "compilerOptions": {
+    "noEmit": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "checkJs": false
+  }
+}

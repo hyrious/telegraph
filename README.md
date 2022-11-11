@@ -1,75 +1,37 @@
-## @hyrious/telegraph
+# @hyrious/telegraph
 
 > Opinionated blogging workflow by [@hyrious](https://github.com/hyrious).
 
-## Folder Structure
+## Opinions
 
+- All source files are put in the `_src` folder, all posts are markdown in it.
+  - `/p/{id}.html` will always **mirror** the content of `_src/{id}.md`.
+- How it works:
+  - `_src/{id}.html` will be compiled to `/{id}.html`.
+  - `_src/p.html` will be compiled to `/p/index.html`.
+  - `_src/post.html` and `_src/{id}.md` will be compiled to `/p/{id}.html`.
+    - Markdown files must have front matter with contents of `{ date, title }`.
+  - `_src/{id}.css` will be compiled to `/{id}.css`.
+- Compilers:
+  - Markdown: marked.js with a few extensions.
+  - CSS: esbuild with http-plugin to bundle resources.
+- Extensibility (**new!**):
+  - Refer to any file outside of `_src` in posts, path just be fine when it starts with `../`.
+  - Custom scripts: create `custom/script-name.js` and add `scripts: string[]` in frontmatter to include it, example:
+    ```yaml
+    scripts:
+      - ../custom/script-name.js
+    ```
+    It will generate `<script src="../custom/script-name.js"></script>` in the final HTML.
+    We use this way to avoid github rendering script tags in the markdown preview.
+
+## Develop
+
+```console
+npm install && npm link
+tg path/to/blog
+npm r -g @hyrious/telegraph
 ```
-github:username.github.io/
-    _src/
-        post-title.md       # post source
-        style.css           # css source
-        index.html          # template for homepage
-        post.html           # template for each post
-        post-index.html     # template for post/index.html
-    p/
-        index.html          # [generated] all posts list
-        post-title.html     # [generated] from
-                              _src/post-title.md and _src/post.html
-    favicon.ico             # user favicon
-    index.html              # [generated] from _src/index.html
-    style.css               # [generated] from _src/style.css
-    CNAME                   # user CNAME
-    .nojekyll               # tell github to not process it to jekyll
-```
-
-Strip <q>generated</q>, these must be hand-written by user:
-
-```
-github:username.github.io/
-    _src/
-        post-title.md
-        style.css
-        index.html
-        post.html
-        post-index.html
-    favicon.ico
-    CNAME
-    .nojekyll
-```
-
-## Process
-
-This tool works in these steps:
-
-```
-@parallel build _src/style.css to ./style.css
-
-posts = []
-foreach _src/*.md, collect post info {
-    posts << { id (slug-name), title, date, text }
-}
-posts.sortBy! date
-
-@parallel build _src/index.html to ./index.html with posts info
-
-@parallel build _src/post-index.html to p/index.html with posts info
-
-foreach post in posts {
-    @parallel build _src/post.md + _src/post.html to p/post.html
-}
-```
-
-Dependency graph:
-
-```
-./style.css: _src/style.css
-./index.html: _src/index.html _src/*.md
-./p/index.html: _src/post-index.html _src/*.md
-./p/title.html: _src/post.html _src/title.md
-```
-
-No JS, but will support KaTeX natively.
 
 ## License
 
