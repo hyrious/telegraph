@@ -32,15 +32,15 @@
     "highlight.js": "^11.7.0",
     "js-yaml": "^4.1.0",
     "katex": "^0.16.4",
-    "marked": "^4.2.5",
+    "marked": "^4.2.12",
     "marked-gfm-heading-id": "^2.0.2",
-    "marked-linkify-it": "^2.0.0",
+    "marked-linkify-it": "^3.0.1",
     "sade": "^1.8.1"
   },
   "devDependencies": {
     "@types/marked": "^4.0.8",
     "@types/node": "^18.11.18",
-    "esbuild": "^0.15.18"
+    "esbuild": "^0.17.3"
   },
   "peerDependencies": {
     "esbuild": "*"
