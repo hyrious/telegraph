@@ -24,10 +24,10 @@
     "bin.js"
   ],
   "dependencies": {
-    "@hyrious/esbuild-plugin-http": "^0.1.1",
-    "@hyrious/rimraf": "^0.1.0",
+    "@hyrious/esbuild-plugin-http": "^0.1.2",
     "ap-style-title-case": "^2.0.0",
     "chokidar": "^3.5.3",
+    "clean-stack": "^5.1.0",
     "github-slugger": "^2.0.0",
     "highlight.js": "^11.7.0",
     "js-yaml": "^4.1.0",
@@ -35,7 +35,9 @@
     "marked": "^4.2.12",
     "marked-gfm-heading-id": "^2.0.2",
     "marked-linkify-it": "^3.0.1",
-    "sade": "^1.8.1"
+    "mrmime": "^1.0.1",
+    "sade": "^1.8.1",
+    "yoctocolors": "^1.0.0"
   },
   "devDependencies": {
     "@types/marked": "^4.0.8",

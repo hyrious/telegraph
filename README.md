@@ -7,17 +7,25 @@
 This tool does not work out of the box.
 Take a look at [my blog's \_src folder](https://github.com/hyrious/hyrious.github.io/blob/main/_src) to continue.
 
+Required files (folders):
+
+```
+_src/               # source files
+  hello-world.md    # must have a front-matter with { title, date } fields
+  style.css
+  index.html
+  p.html
+p/                  # rendered posts
+  hello-world.html
+  index.html        # rendered from _src/p.html
+style.css
+index.html
+```
+
 ## Commands
 
-- `tg build [--watch] [root]`: Build the site, expects a `_src` folder in `[root]`.
+- `tg build [--watch] [--serve] [root]`: Build the site, expects a `_src` folder in `[root]`.
 - `tg new <title> [root]`: Create a new post `_src/title.md`.
-
-### Tip: use with [w7](https://github.com/hyrious/w7)
-
-```bash
-$ npm i -g concurrently @hyrious/w7 @hyrious/telegraph
-$ conc w7 "tg build -w"
-```
 
 ## Rules
 
@@ -89,6 +97,8 @@ npm install && npm link
 tg path/to/blog
 npm r -g @hyrious/telegraph
 ```
+
+See [Develop](./Develop.md) for more technical details.
 
 ## Changelog
 

@@ -1,44 +1,44 @@
 #!/usr/bin/env node
 import fs from 'node:fs'
 import path from 'node:path'
+
 import sade from 'sade'
-import { build } from './lib/build.js'
-import { watch } from './lib/watch.js'
-import { create } from './lib/new.js'
+import { slug } from 'github-slugger'
+import { apStyleTitleCase } from 'ap-style-title-case'
 
-const { version } = JSON.parse(fs.readFileSync(new URL('./package.json', import.meta.url)))
+import { build, serve } from './lib/telegraph.js'
 
-const tg = sade('tg').version(version).describe('Yet another static site generator')
+sade('tg')
+  .version(JSON.parse(fs.readFileSync(new URL('./package.json', import.meta.url))).version)
+  .describe('Yet another static site generator')
 
-tg.command('build [root]', 'Build the site, expects a _src folder in the root folder.', { default: true })
+  .command('build [root]', 'Build the site, expects a _src folder in the root folder.', { default: true })
   .option('-w, --watch', 'Watch for changes and rebuild automatically', false)
   .example('build -w')
-  .action(main_)
-
-tg.command('new <title> [root]')
-  .describe('Create a new _src/<title>.md.')
-  .example('new "Hello, world\\!"')
-  .action(create_)
-
-tg.parse(process.argv)
-
-function create_(title, root) {
-  root = path.resolve(root || '.')
-  create(title, root)
-}
-
-function main_(root, options) {
-  root = path.resolve(root || '.')
-  main(root, options).catch((err) => {
-    console.error(err.message)
-    process.exitCode = 1
+  .action(function (root, options) {
+    const action = options.watch ? serve : build
+    action(root)
   })
-}
 
-async function main(root, options) {
-  if (options.watch) {
-    await watch(root)
-  } else {
-    await build(root)
-  }
-}
+  .command('new <title> [root]')
+  .describe('Create a new _src/<title>.md.')
+  .example('new "Hello, world"')
+  .action(function (title, root = '.') {
+    fs.mkdirSync(path.join(root, '_src'), { recursive: true })
+    const text = `---
+title: ${apStyleTitleCase(title)}
+date: ${new Date().toISOString().slice(0, 10)}
+---
+
+Lorem ipsum solo sit amet.
+`
+    const p = path.join(root, '_src', slug(title).replace(/^-+|-+$/g, '') + '.md')
+    if (fs.existsSync(p)) {
+      console.error('already exists', p)
+      process.exit(1)
+    }
+    fs.writeFileSync(p, text)
+    console.log('written', p)
+  })
+
+  .parse(process.argv)
