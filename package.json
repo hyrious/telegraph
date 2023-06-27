@@ -29,20 +29,21 @@
     "chokidar": "^3.5.3",
     "clean-stack": "^5.2.0",
     "github-slugger": "^2.0.0",
-    "highlight.js": "^11.7.0",
+    "highlight.js": "^11.8.0",
     "js-yaml": "^4.1.0",
-    "katex": "^0.16.4",
-    "marked": "^4.3.0",
-    "marked-gfm-heading-id": "^2.0.2",
-    "marked-linkify-it": "^3.0.1",
+    "katex": "^0.16.8",
+    "marked": "^5.1.0",
+    "marked-gfm-heading-id": "^3.0.4",
+    "marked-highlight": "^2.0.1",
+    "marked-linkify-it": "^3.0.2",
     "mrmime": "^1.0.1",
     "sade": "^1.8.1",
     "yoctocolors": "^1.0.0"
   },
   "devDependencies": {
-    "@types/marked": "^4.0.8",
-    "@types/node": "^18.15.9",
-    "esbuild": "^0.17.13"
+    "@types/marked": "^5.0.0",
+    "@types/node": "^18.16.18",
+    "esbuild": "^0.18.10"
   },
   "peerDependencies": {
     "esbuild": "*"
