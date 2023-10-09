@@ -1,9 +1,9 @@
 {
-  'endOfLine': 'auto',
-  'printWidth': 110,
-  'semi': false,
-  'trailingComma': 'all',
-  'singleQuote': true,
-  'quoteProps': 'consistent',
-  'arrowParens': 'avoid',
+  "endOfLine": "auto",
+  "printWidth": 110,
+  "semi": false,
+  "trailingComma": "all",
+  "singleQuote": true,
+  "quoteProps": "consistent",
+  "arrowParens": "avoid"
 }

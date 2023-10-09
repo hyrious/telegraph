@@ -14,10 +14,11 @@ sade('tg')
 
   .command('build [root]', 'Build the site, expects a _src folder in the root folder.', { default: true })
   .option('-w, --watch', 'Watch for changes and rebuild automatically', false)
+  .option('--minify', 'Minify HTML', false)
   .example('build -w')
   .action(function (root, options) {
     const action = options.watch ? serve : build
-    action(root)
+    action(root, options)
   })
 
   .command('new <title> [root]')
